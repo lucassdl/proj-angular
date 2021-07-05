@@ -1,6 +1,7 @@
-import { ContatoService } from './../services/contato.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
+import { ContatoService } from './../services/contato.service';
 import { Contato } from '../models/contato.model';
 @Component({
   selector: 'app-contato-form',
@@ -9,17 +10,14 @@ import { Contato } from '../models/contato.model';
 })
 export class ContatoFormComponent implements OnInit {
 
-  contato: Contato = new Contato;
-  contatos: Contato[] = [];
+  @Input() contato: Contato = new Contato;
+  @Output() saveContato = new EventEmitter();
 
-  constructor(private contatoService: ContatoService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   onSubmit(form: NgForm){
-    this.contato = form.value;
-    this.contato.id = new Date().getTime().toString();
-    this.contatoService.save(this.contato);
+    this.saveContato.emit(form);
   }
 }
