@@ -1,7 +1,6 @@
-import { ContatoService } from './../services/contato.service';
-import { Component, Input,  OnInit } from '@angular/core';
-import { Contato } from '../models/contato.model';
+import { Component, EventEmitter, Input,  OnInit, Output } from '@angular/core';
 
+import { Contato } from '../models/contato.model';
 @Component({
   selector: 'app-contato-list',
   templateUrl: './contato-list.component.html',
@@ -10,10 +9,20 @@ import { Contato } from '../models/contato.model';
 export class ContatoListComponent implements OnInit {
 
   @Input() contatos: Contato[] = [];
+  @Output() editContato = new EventEmitter();
+  @Output() deleteContato = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  edit(contato: Contato){
+    this.editContato.emit(contato);
+  }
+
+  delete(contato: Contato){
+    this.deleteContato.emit(contato);
   }
 
 }
